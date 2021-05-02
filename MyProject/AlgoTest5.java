@@ -17,8 +17,15 @@ public class AlgoTest5 {
 
 			if (N < 1 || N > 1000) {
 				System.out.println("1이상 1000미만 숫자만 입력 가능");
+<<<<<<< HEAD
 				continue;
 			} else if (N % 45 == 0) {
+=======
+				break;
+			}
+
+			if (N % 45 == 0) {
+>>>>>>> 5b88aae3c815d07bc99339d53ef514c3c37d436e
 				for (int j = 0; j < N / 45; j++) {
 					bus45++;
 				}
@@ -26,11 +33,21 @@ public class AlgoTest5 {
 				for (int j = 0; j < N / 25; j++) {
 					bus25++;
 				}
+<<<<<<< HEAD
 			} else if (26 <= N && N <= 45) {
 				bus45++;
 			} else if (1 <= N && N <= 25) {
 				bus25++;
 			} else if (N % 95 == 0) {
+=======
+			} 
+			else if (26 <= N && N <= 45) {
+				bus45++;
+			} else if (1 <= N && N <= 25) {
+				bus25++;
+			} 
+			else if (N % 95 == 0) {
+>>>>>>> 5b88aae3c815d07bc99339d53ef514c3c37d436e
 				for (int j = 0; j < N / 95; j++) {
 					bus45++;
 					bus25 += 2;
@@ -55,4 +72,8 @@ public class AlgoTest5 {
 		}
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5b88aae3c815d07bc99339d53ef514c3c37d436e

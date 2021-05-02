@@ -14,6 +14,7 @@ public class AlgoTest4 {
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = sc.nextInt();
 		}
+<<<<<<< HEAD
 
 		Arrays.sort(arr);
 
@@ -28,6 +29,24 @@ public class AlgoTest4 {
 //			}
 //
 //		}
+=======
+		System.out.println(Arrays.toString(arr));
+
+//		Arrays.sort(arr);
+//		System.out.println(Arrays.toString(arr));
+
+		int max1 = arr[0];
+		int max2 = arr[0];
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] > max1) {
+				max2 = max1;
+				max1 = arr[i];
+			} else if (arr[i] > max2) {
+				max2 = arr[i];
+			}
+
+		}
+>>>>>>> 5b88aae3c815d07bc99339d53ef514c3c37d436e
 		System.out.println("최대1 : " + max1 + ", " + "최대2 : " + max2);
 
 		int result = 0;
@@ -44,4 +63,8 @@ public class AlgoTest4 {
 
 		System.out.println(result);
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5b88aae3c815d07bc99339d53ef514c3c37d436e

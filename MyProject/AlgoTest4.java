@@ -17,23 +17,13 @@ public class AlgoTest4 {
 
 		Arrays.sort(arr);
 
-		int max1 = arr[arr.length-1];
-		int max2 = arr[arr.length-2];
-//		for (int i = 0; i < arr.length; i++) {
-//			if (arr[i] > max1) {
-//				max2 = max1;
-//				max1 = arr[i];
-//			} else if (arr[i] > max2) {
-//				max2 = arr[i];
-//			}
-//
-//		}
-		System.out.println("최대1 : " + max1 + ", " + "최대2 : " + max2);
+		int max1 = arr[arr.length - 1];
+		int max2 = arr[arr.length - 2];
 
 		int result = 0;
-		int count = 1;
+		int count = 0;
 		for (int i = 0; i < M; i++) {
-			if (count > K) {
+			if (count == K) {
 				result += max2;
 				count = 0;
 				continue;

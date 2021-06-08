@@ -340,6 +340,37 @@ public class UserDB {
 		return true;
 	}
 	
+	public boolean updateData3 (UserInfo userinfo) {
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/userInfoList.db",
+					config.toProperties());
+						
+			// use
+			String query = "UPDATE userInfo SET name=?, birthday=?, address=?, updated=? WHERE idx=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, userinfo.name);
+			preparedStatement.setString(2, userinfo.birthday);
+			preparedStatement.setString(3, userinfo.address);
+			preparedStatement.setString(4, userinfo.updated);
+			preparedStatement.setInt(5, userinfo.idx);
+			int result = preparedStatement.executeUpdate();
+			
+			if (result < 1) {
+				return false;
+			}
+
+			// close
+			preparedStatement.close();
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	
 	public void deleteData(int idx) {
 		try {

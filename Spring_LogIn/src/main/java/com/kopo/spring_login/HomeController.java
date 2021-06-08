@@ -71,9 +71,9 @@ public class HomeController {
 		UserDB db = new UserDB();
 		boolean isSuccess = db.logInData(id, pwd);
 		if (isSuccess) {
-			session.setAttribute("is_login", true);
-			session.setAttribute("is_login_id", id);
-			session.setAttribute("is_login_pwd", pwd);
+			session.setAttribute("is_login1", true);
+			session.setAttribute("is_login_id1", id);
+			session.setAttribute("is_login_pwd1", pwd);
 			model.addAttribute("m1", "로그인 성공");
 			return "logMsg";
 		} else {
@@ -95,8 +95,8 @@ public class HomeController {
 		if (isSuccess) {
 			session.setAttribute("is_login2", true);
 			session.setAttribute("is_login_idx", idx);
-			session.setAttribute("is_login_id", id);
-			session.setAttribute("is_login_id", pwd);
+			session.setAttribute("is_login_id2", id);
+			session.setAttribute("is_login_pwd2", pwd);
 			model.addAttribute("m1", "로그인 성공");
 			return "logMsg2";
 		} else {
@@ -110,15 +110,12 @@ public class HomeController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listMethod(HttpSession session, Locale locale, Model model) {
 		try {
-			String isLogin_id = (String) session.getAttribute("is_login_id");
-			String isLogin_pwd = (String) session.getAttribute("is_login_pwd");
+			String isLogin_id = (String) session.getAttribute("is_login_id1");
+			String isLogin_pwd = (String) session.getAttribute("is_login_pwd1");
 			UserInfo userinfo = new UserInfo();
 			UserDB db = new UserDB();
-//			System.out.println(isLogin_id);
-//			System.out.println(isLogin_pwd);
 
-			if (isLogin_id != null && isLogin_pwd != null && isLogin_id.equals("knd") 
-					&& isLogin_pwd.equals("1")) {
+			if (isLogin_id != null && isLogin_pwd != null && isLogin_id.equals("knd")) {
 				String htmlString = db.selectData();
 				model.addAttribute("listInTbody", htmlString);
 				return "list";
@@ -247,7 +244,7 @@ public class HomeController {
 		UserDB db = new UserDB();
 		boolean isSuccess = false;
 		if(pwd.isEmpty()) {
-			isSuccess = db.updateData2(userinfo2);
+			isSuccess = db.updateData3(userinfo2);
 		} else {
 			isSuccess = db.updateData2(userinfo1);
 		}

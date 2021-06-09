@@ -219,9 +219,7 @@ public class UserDB {
 							+ "<td>" + birthday + "</td>"
 							+ "<td>" + address + "</td>"
 							+ "<td>" + created + "</td>"
-							+ "<td>" + updated + "</td>"
-							+ "<td><a href = 'update?idx=" + idx + "'>수정</a></td>"
-							+ "<td><a href = 'delete?idx=" + idx + "'>삭제</a></td>";
+							+ "<td>" + updated + "</td>";
 				resultString = resultString + "</tr>";
 			}
 

@@ -278,7 +278,7 @@ public class HomeController {
 		UserDB db = new UserDB();
 		String htmlString = db.searchData(name);
 		model.addAttribute("listInTbody", htmlString);
-		return "list";
+		return "list2";
 	}
 
 }

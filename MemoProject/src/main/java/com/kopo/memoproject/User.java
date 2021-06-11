@@ -1,7 +1,7 @@
 package com.kopo.memoproject;
 
 public class User {
-	int idx;
+	String idx;
 	String id;
 	String pwd;
 	String name;

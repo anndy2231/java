@@ -21,7 +21,7 @@
 		</p>
 		
 		<button type="button" onclick="location.href='/memoproject/login'">로그인</button>
-<!-- 		<button type="button" onclick="location.href='/memoproject/logout'">로그아웃</button> -->
+		<button type="button" onclick="location.href='/memoproject/logOut'">로그아웃</button>
 		<button type="button" onclick="location.href='/memoproject/signUp'">회원가입</button>
     </body>
 

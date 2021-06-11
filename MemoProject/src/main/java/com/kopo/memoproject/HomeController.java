@@ -3,8 +3,10 @@ package com.kopo.memoproject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,32 +39,37 @@ public class HomeController {
 		boolean isSuccess = db.createTable();
 		if (isSuccess) {
 			model.addAttribute("m1", "테이블이 생성되었습니다.");
+			return "message";
 		} else {
 			model.addAttribute("m1", "DB Error");
+			return "message";
 		}
-		return "message";
 	}
 
 	@RequestMapping(value = "/insertMemo", method = RequestMethod.GET)
-	public String createMethod(Locale locale, Model model) {
-		return "insertMemo";
+	public String createMethod(HttpSession session, Locale locale, Model model) {
+		String isLogin = (String) session.getAttribute("isLogin");
+		if (isLogin != null && isLogin.equals("success")) {
+			return "insertMemo";
+		} else {
+			model.addAttribute("m1", "로그인이 필요합니다.");
+			return "message";
+		}
 	}
 
 	@RequestMapping(value = "/insertMemo_action", method = RequestMethod.POST)
-	public String createAction(HttpServletRequest request, Locale locale, Model model) {
+	public String createAction(HttpServletRequest request, HttpSession session, Locale locale, Model model) {
 
+		int userIdx = Integer.parseInt(String.valueOf(session.getAttribute("is_login_idx")));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-//		String userIdxString = request.getParameter("userIdx");
-//		int userIdx = Integer.parseInt(userIdxString);
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String now = sdf.format(Calendar.getInstance().getTime());
 
 		MemoDB db = new MemoDB();
-		Memo memo = new Memo(title, content, now, now, 0);
+		User user = new User();
+		Memo memo = new Memo(title, content, now, now, userIdx);
 		boolean isSuccess = db.insertMemo(memo);
-
 		if (isSuccess) {
 			model.addAttribute("m1", "메모 작성 완료");
 		} else {
@@ -74,12 +81,11 @@ public class HomeController {
 	@RequestMapping(value = "/memoList", method = RequestMethod.GET)
 	public String memoList(HttpSession session, Locale locale, Model model) {
 		try {
-			Boolean isLogin_id = (Boolean) session.getAttribute("is_login");
-//			String isLogin_id = (String) session.getAttribute("is_login_id");
-//			String isLogin_pwd = (String) session.getAttribute("is_login_pwd");
-			User user = new User();
-			if (isLogin_id) {
-				String htmlString = user.selectData();
+			String isLogin = (String) session.getAttribute("isLogin");
+			if (isLogin != null && isLogin.equals("success")) {
+				int userIdx = Integer.parseInt(String.valueOf(session.getAttribute("is_login_idx")));
+				MemoDB db = new MemoDB();
+				String htmlString = db.selectData(userIdx);
 				model.addAttribute("listInTbody", htmlString);
 				return "memoList";
 			} else {
@@ -158,6 +164,7 @@ public class HomeController {
 		MemoDB db = new MemoDB();
 		User user = new User(id, pwd, name, birthday, address, now);
 		boolean isSuccess = db.signUp(user);
+
 		if (id.isEmpty() || pwd.isEmpty()) {
 			model.addAttribute("m1", "아이디, 비밀번호 입력 필수");
 		} else if (isSuccess) {
@@ -181,16 +188,24 @@ public class HomeController {
 
 		MemoDB db = new MemoDB();
 		boolean isSuccess = db.logIn(id, pwd);
+
 		if (isSuccess) {
-			session.setAttribute("is_login", true);
-//			session.setAttribute("is_login_id", id);
-//			session.setAttribute("is_login_pwd", pwd);
+			int userIdx = db.detailsData2(id, pwd);
+			session.setAttribute("isLogin", "success");
+			session.setAttribute("is_login_idx", userIdx);
 			model.addAttribute("m1", "로그인 성공");
 			return "logMsg";
 		} else {
 			model.addAttribute("m1", "아이디 또는 비밀번호 불일치");
 			return "logFail";
 		}
+	}
+
+	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
+	public String loginout(HttpSession session, Locale locale, Model model) {
+		session.invalidate();
+		model.addAttribute("m1", "로그아웃 완료");
+		return "message";
 	}
 
 }

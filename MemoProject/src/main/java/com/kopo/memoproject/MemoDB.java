@@ -36,7 +36,7 @@ public class MemoDB {
 					config.toProperties());
 
 			// use
-			String query = "CREATE TABLE memo (idx INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, name TEXT, created TEXT, updated TEXT, userIdx INTEGER)";
+			String query = "CREATE TABLE memo (idx INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, created TEXT, updated TEXT, userIdx INTEGER)";
 			Statement statement = connection.createStatement();
 			int result = statement.executeUpdate(query);
 
@@ -120,7 +120,36 @@ public class MemoDB {
 		return resultData;
 	}
 	
-	public String selectData() {
+	public int detailsData2(String id, String pwd) {
+		int resultData = 0;
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+			
+			pwd = sha256(pwd);
+			
+			// use
+			String query = "SELECT idx FROM user WHERE id=? and pwd=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, pwd);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				resultData = resultSet.getInt("idx");
+			}
+
+			// close
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+		}
+		return resultData;
+	}
+	
+	public String selectData(int userIdx) {
 		String resultString = "";
 		try {
 			// open
@@ -129,8 +158,9 @@ public class MemoDB {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
 
 			// use
-			String query = "SELECT * from memo";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);			
+			String query = "SELECT * from memo where userIdx = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userIdx);
 			ResultSet resultSet = preparedStatement.executeQuery(); // 커서가 가리키는 곳 가져오기 위함
 			
 			while (resultSet.next()) {
@@ -157,46 +187,6 @@ public class MemoDB {
 		}
 		return resultString;
 	}
-	
-	
-	public String selectData2() {
-		String resultString = "";
-		try {
-			// open
-			Class.forName("org.sqlite.JDBC");
-			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
-
-			// use
-			String query = "SELECT * from user";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);			
-			ResultSet resultSet = preparedStatement.executeQuery(); // 커서가 가리키는 곳 가져오기 위함
-			
-			while (resultSet.next()) {
-				int idx = resultSet.getInt("idx");
-				String title = resultSet.getString("title");
-				String content = resultSet.getString("content");
-				String created = resultSet.getString("created");
-				String updated = resultSet.getString("updated");
-				resultString = resultString + "<tr>" 
-						+ "<td>" + idx + "</td>"
-						+ "<td>" + title + "</td>"
-						+ "<td>" + content + "</td>"
-						+ "<td>" + created	+ "</td>"
-						+ "<td>" + updated + "</td>"
-						+ "<td><a href = 'update?idx=" + idx + "'>수정</a></td>"
-						+ "<td><a href = 'delete?idx=" + idx + "'>삭제</a></td>";
-				resultString = resultString + "</tr>";
-			}
-
-			// close
-			connection.close();
-			preparedStatement.close();
-		} catch (Exception e) {
-		}
-		return resultString;
-	}
-	
 	
 	public void deleteData(int idx) {
 		try {

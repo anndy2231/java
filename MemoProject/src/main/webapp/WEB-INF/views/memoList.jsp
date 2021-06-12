@@ -19,7 +19,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>idx</th><th>Title</th><th>Content</th><th>작성일</th><th>수정일</th><th>수정</th><th>삭제</th>
+					<th>idx</th><th>Title</th><th>Content</th><th>Created</th><th>Updated</th><th>Update</th><th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>

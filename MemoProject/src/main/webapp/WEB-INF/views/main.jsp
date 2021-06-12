@@ -15,13 +15,14 @@
         <h1>Memo_Z</h1>
       	<p> Welcome! </p>
 		<a href="/memoproject/insertMemo">메모 작성하기</a><br>
-		<a href="/memoproject/memoList">메모 리스트</a><br>
+		<a href="/memoproject/memoList">메모 목록 및 관리</a><br>
+		<a href="/memoproject/updateUser">개인정보 수정</a><br>
 		<p>
 		<a href="/memoproject/create_table">메모 테이블 생성</a><br>
 		</p>
 		
 		<button type="button" onclick="location.href='/memoproject/login'">로그인</button>
-		<button type="button" onclick="location.href='/memoproject/logOut'">로그아웃</button>
+		<button type="button" onclick="location.href='/memoproject/logout'">로그아웃</button>
 		<button type="button" onclick="location.href='/memoproject/signUp'">회원가입</button>
     </body>
 

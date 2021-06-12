@@ -85,7 +85,7 @@ public class HomeController {
 			if (isLogin != null && isLogin.equals("success")) {
 				int userIdx = Integer.parseInt(String.valueOf(session.getAttribute("is_login_idx")));
 				MemoDB db = new MemoDB();
-				String htmlString = db.selectData(userIdx);
+				String htmlString = db.selectMemo(userIdx);
 				model.addAttribute("listInTbody", htmlString);
 				return "memoList";
 			} else {
@@ -104,7 +104,7 @@ public class HomeController {
 		MemoDB db = new MemoDB();
 		Memo selectMemo = db.detailsData(idx);
 		if (selectMemo != null) {
-			db.deleteData(idx);
+			db.deleteMemo(idx);
 		}
 		model.addAttribute("m1", "메모가 삭제되었습니다.");
 		return "message";
@@ -136,7 +136,7 @@ public class HomeController {
 
 		MemoDB db = new MemoDB();
 		Memo memo = new Memo(idx, title, content, now);
-		boolean isSuccess = db.updateData(memo);
+		boolean isSuccess = db.updateMemo(memo);
 		if (isSuccess) {
 			model.addAttribute("m1", "수정 완료");
 		} else {
@@ -193,6 +193,8 @@ public class HomeController {
 			int userIdx = db.detailsData2(id, pwd);
 			session.setAttribute("isLogin", "success");
 			session.setAttribute("is_login_idx", userIdx);
+			session.setAttribute("is_login_id", id);
+			session.setAttribute("is_login_pwd", pwd);
 			model.addAttribute("m1", "로그인 성공");
 			return "logMsg";
 		} else {
@@ -201,11 +203,74 @@ public class HomeController {
 		}
 	}
 
-	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
-	public String loginout(HttpSession session, Locale locale, Model model) {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session, Locale locale, Model model) {
 		session.invalidate();
 		model.addAttribute("m1", "로그아웃 완료");
 		return "message";
 	}
 
+	
+	@RequestMapping(value = "/login2_action", method = RequestMethod.POST)
+	public String logInAction2(HttpServletRequest request, HttpSession session, Locale locale, Model model) {
+		String userId = String.valueOf(session.getAttribute("is_login_id"));
+		String pwd = request.getParameter("pwd");
+		MemoDB db = new MemoDB();
+		boolean isLogin = db.logIn(userId, pwd);
+		if(isLogin) {
+			model.addAttribute("m1", "비밀번호 일치");
+			return "logMsg2";
+		} else {
+			model.addAttribute("m1", "로그인 필수, 비밀번호 확인 요망");
+			return "message";
+		}
+	}
+	
+	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
+	public String updateUser(Locale locale, Model model) {
+		return "login2";
+	}
+	
+	@RequestMapping(value = "/updateUser2", method = RequestMethod.GET)
+	public String updateUser2(HttpSession session, Locale locale, Model model) {
+		int userIdx = Integer.parseInt(String.valueOf(session.getAttribute("is_login_idx")));
+		MemoDB db = new MemoDB();
+		User selectUser = db.detailsData3(userIdx);
+		if (selectUser != null) {
+			model.addAttribute("idx", selectUser.idx);
+			model.addAttribute("id", selectUser.id);
+			model.addAttribute("name", selectUser.name);
+			model.addAttribute("address", selectUser.address);
+			model.addAttribute("birthday", selectUser.birthday);
+			}
+		return "updateUser";
+	}
+	
+	@RequestMapping(value = "/updateUser_action", method = RequestMethod.POST)
+	public String updateUserAction(HttpServletRequest request, Locale locale, Model model) {
+		int idx = Integer.parseInt(request.getParameter("idx"));
+		String pwd = request.getParameter("pwd2");
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String birthday = request.getParameter("birthday");
+		MemoDB db = new MemoDB();
+		User user1 = new User(idx, pwd, name, address, birthday);
+		User user2 = new User(idx, name, address, birthday);
+		
+		boolean isSuccess = false;
+		
+		if(pwd.isEmpty()) {
+			isSuccess = db.updateUser2(user2);
+		} else {
+			isSuccess = db.updateUser(user1);
+		}
+		
+		if (isSuccess) {
+			model.addAttribute("m1", "정보 수정 완료");
+		} else {
+			model.addAttribute("m1", "DB Error!!!");
+		}
+		return "message";
+	}
+	
 }

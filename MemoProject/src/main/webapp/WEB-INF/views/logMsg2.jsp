@@ -16,7 +16,7 @@
         <p style="padding: 20px; background: #eee; border-radius: 5px; text-align: center;">
             ${m1 }
         </p>
-        <a href ="/memoproject/" style="margin-top:100px;">확인</a>
+        <a href ="/memoproject/updateUser2" style="margin-top:100px;">확인</a>
     </section>
 </body>
 

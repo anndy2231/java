@@ -15,10 +15,15 @@
     <section class="wrap">
         <form action="update_action" method="post">
         <input type="hidden" name="idx" value="${idx}"/>     
+<<<<<<< HEAD
         <p>
          <input type="text" name="title" value ="${title}" />
          </p>
             <textarea name="content" cols="40" rows="15">${content}</textarea>
+=======
+        <p><input type="text" name="title" value ="${title}" /></p>
+        <p><textarea name="content" cols="40" rows="15">${content}</textarea></p>
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
             <input type="submit" value="입력 완료"  />
         </form>
     </section>

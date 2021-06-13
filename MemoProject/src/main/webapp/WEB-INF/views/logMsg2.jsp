@@ -16,11 +16,7 @@
         <p style="padding: 20px; background: #eee; border-radius: 5px; text-align: center;">
             ${m1 }
         </p>
-<<<<<<< HEAD
-        <a href ="/memoproject/" style="margin-top:100px;">입장하기</a>
-=======
-        <a href ="/memoproject/" style="margin-top:100px;">확인</a>
->>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
+        <a href ="/memoproject/updateUser2" style="margin-top:100px;">확인</a>
     </section>
 </body>
 

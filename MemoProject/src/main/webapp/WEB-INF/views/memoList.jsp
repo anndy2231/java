@@ -19,7 +19,11 @@
 		<table>
 			<thead>
 				<tr>
+<<<<<<< HEAD
 					<th>idx</th><th>Title</th><th>Content</th><th>작성일</th><th>수정일</th><th>수정</th><th>삭제</th>
+=======
+					<th>idx</th><th>Title</th><th>Content</th><th>Created</th><th>Updated</th><th>Update</th><th>Delete</th>
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 				</tr>
 			</thead>
 			<tbody>

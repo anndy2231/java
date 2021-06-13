@@ -19,6 +19,7 @@ public class Memo {
 		this.content = content;
 		this.updated = updated;
 	}
+<<<<<<< HEAD
 	
 	Memo(String title, String content, String created, String updated) {
 		this.title = title;
@@ -27,6 +28,8 @@ public class Memo {
 		this.updated = updated;
 	}
 
+=======
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 
 	Memo(String title, String content, String created, String updated, int userIdx) {
 		this.title = title;

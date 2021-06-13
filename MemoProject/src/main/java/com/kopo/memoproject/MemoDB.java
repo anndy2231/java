@@ -36,7 +36,11 @@ public class MemoDB {
 					config.toProperties());
 
 			// use
+<<<<<<< HEAD
 			String query = "CREATE TABLE memo (idx INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, name TEXT, created TEXT, updated TEXT, userIdx INTEGER)";
+=======
+			String query = "CREATE TABLE memo (idx INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, created TEXT, updated TEXT, userIdx INTEGER)";
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 			Statement statement = connection.createStatement();
 			int result = statement.executeUpdate(query);
 
@@ -120,12 +124,18 @@ public class MemoDB {
 		return resultData;
 	}
 	
+<<<<<<< HEAD
 	public String selectData() {
 		String resultString = "";
+=======
+	public int detailsData2(String id, String pwd) {
+		int resultData = 0;
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
+<<<<<<< HEAD
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
 
 			// use
@@ -148,6 +158,21 @@ public class MemoDB {
 						+ "<td><a href = 'update?idx=" + idx + "'>수정</a></td>"
 						+ "<td><a href = 'delete?idx=" + idx + "'>삭제</a></td>";
 				resultString = resultString + "</tr>";
+=======
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+			
+			pwd = sha256(pwd);
+			
+			// use
+			String query = "SELECT idx FROM user WHERE id=? and pwd=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, pwd);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				resultData = resultSet.getInt("idx");
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 			}
 
 			// close
@@ -155,11 +180,49 @@ public class MemoDB {
 			preparedStatement.close();
 		} catch (Exception e) {
 		}
+<<<<<<< HEAD
 		return resultString;
 	}
 	
 	
 	public String selectData2() {
+=======
+		return resultData;
+	}
+	
+	public User detailsData3(int idx) {
+		User resultData = new User();
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
+			// use
+			String query = "SELECT * FROM user WHERE idx=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, idx);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				resultData.idx = resultSet.getInt("idx");
+				resultData.id = resultSet.getString("id");
+				resultData.pwd = resultSet.getString("pwd");
+				resultData.name = resultSet.getString("name");
+				resultData.address = resultSet.getString("address");
+				resultData.birthday = resultSet.getString("birthday");
+			}
+
+			// close
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+		}
+		return resultData;
+	}
+	
+	public String selectMemo(int userIdx) {
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 		String resultString = "";
 		try {
 			// open
@@ -168,8 +231,14 @@ public class MemoDB {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
 
 			// use
+<<<<<<< HEAD
 			String query = "SELECT * from user";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);			
+=======
+			String query = "SELECT * from memo where userIdx = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userIdx);
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 			ResultSet resultSet = preparedStatement.executeQuery(); // 커서가 가리키는 곳 가져오기 위함
 			
 			while (resultSet.next()) {
@@ -197,8 +266,12 @@ public class MemoDB {
 		return resultString;
 	}
 	
+<<<<<<< HEAD
 	
 	public void deleteData(int idx) {
+=======
+	public void deleteMemo(int idx) {
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
@@ -219,7 +292,11 @@ public class MemoDB {
 		}
 	}
 	
+<<<<<<< HEAD
 	public boolean updateData(Memo memo) {
+=======
+	public boolean updateMemo(Memo memo) {
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
@@ -240,8 +317,77 @@ public class MemoDB {
 			}
 
 			// close
+<<<<<<< HEAD
 			preparedStatement.close();
 			connection.close();
+=======
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean updateUser(User user) {
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
+						
+			// password hash
+			user.pwd = sha256(user.pwd);
+			
+			// use
+			String query = "UPDATE user SET pwd=?, name=?, birthday=?, address=? WHERE idx=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, user.pwd);
+			preparedStatement.setString(2, user.name);
+			preparedStatement.setString(3, user.birthday);
+			preparedStatement.setString(4, user.address);
+			preparedStatement.setInt(5, user.idx);
+			int result = preparedStatement.executeUpdate();
+			
+			if (result < 1) {
+				return false;
+			}
+
+			// close
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean updateUser2(User user) {
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
+						
+			// use
+			String query = "UPDATE user SET name=?, birthday=?, address=? WHERE idx=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, user.name);
+			preparedStatement.setString(2, user.birthday);
+			preparedStatement.setString(3, user.address);
+			preparedStatement.setInt(4, user.idx);
+			int result = preparedStatement.executeUpdate();
+			
+			if (result < 1) {
+				return false;
+			}
+
+			// close
+			connection.close();
+			preparedStatement.close();
+>>>>>>> 1f8bc39d9efe120c11a2d348441da9dbd828c7c8
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

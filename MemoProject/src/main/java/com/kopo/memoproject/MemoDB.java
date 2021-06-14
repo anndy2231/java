@@ -416,4 +416,40 @@ public class MemoDB {
 		}
 	}
 	
+	
+	public String searchUser(String searchName) {
+		String resultString = "";
+		try {
+			// open
+			Class.forName("org.sqlite.JDBC");
+			SQLiteConfig config = new SQLiteConfig();
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
+			// use
+			String query = "SELECT * FROM user WHERE name LIKE ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, "%" + searchName + "%");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) { // 이름에 동일한 글자가 있을 수 있기 때문에 반복문 사용
+				int idx = resultSet.getInt("idx");
+				String name = resultSet.getString("name");
+				String birthday = resultSet.getString("birthday");
+				String address = resultSet.getString("address");
+				resultString = resultString + "<tr>"
+							+ "<td>" + idx + "</td>"
+							+ "<td>" + name	+ "</td>"
+							+ "<td>" + birthday + "</td>"
+							+ "<td>" + address + "</td>";
+				resultString = resultString + "</tr>";
+			}
+
+			// close
+			preparedStatement.close();
+			connection.close();
+		} catch (Exception e) {
+		}
+		return resultString;
+	}
+	
 }

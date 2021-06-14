@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<%--  	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/insert.css" media="screen" type="text/css">     --%>
+ 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/main.css" media="screen" type="text/css">    
  	<title>SignUp</title>
 </head>
 
@@ -20,7 +20,7 @@
 			주소 입력: <input type="text" name="address" id="" placeholder="주소" /> <br>
             <input type="submit" value="입력 완료" id="" />
         </form>
-            <a href ="/memoproject/" style="margin-top:100px;">홈으로</a>
+           <button type="button" onclick="location.href='/memoproject'">홈으로</button>
     </section>
 </body>
 

@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,15 +11,23 @@
 
 <body>
     <h1>Memo_Z</h1>
-    <div id="txt">
-    <input type="text" placeholder="제목을 입력해주세요.">
-    </div>   
     <div>
-        <textarea name="" id="" cols="40" rows="15" placeholder="내용을 입력해주세요"></textarea>
-    </div>
-    <div class="btn1">
-        <input type="button" value="확인" id="submit">
-    </div>
+    <a href="/memoproject/insertMemo">메모 작성하기</a><br>
+    <a href="/memoproject/memoList">메모 목록 및 관리</a><br>
+    <a href="/memoproject/updateUser">개인정보 수정</a><br>
+    <a href="/memoproject/searchUser">회원 검색</a><br>
+    <a href="/memoproject/create_table">메모 테이블 생성</a><br>
+</div>
+    <br>
+    <button type="button" onclick="location.href='/memoproject/login'">로그인</button>
+    <button type="button" onclick="location.href='/memoproject/logout'">로그아웃</button>
+    <button type="button" onclick="location.href='/memoproject/signUp'">회원가입</button>
+    <section class="wrap" style="width: 60%; margin: 0 auto; padding: 50px;">
+        <p style="padding: 20px; background: #eee; border-radius: 5px; text-align: center;">
+           테스트
+        </p>
+        <a href ="/spring_login_0601" style="margin-top:100px;">홈으로</a>
+    </section>
 </body>
 
 </html>

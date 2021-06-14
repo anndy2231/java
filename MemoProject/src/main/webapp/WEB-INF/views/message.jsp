@@ -13,10 +13,10 @@
 
 <body>
     <section class="wrap" style="width: 60%; margin: 0 auto; padding: 50px;">
-        <p style="padding: 20px; background: #eee; border-radius: 5px; text-align: center;">
+        <p style="padding: 20px; color: rgb(231, 126, 84); font-weight: bold; background: #eee; border-radius: 5px; text-align: center;">
             ${m1}
         </p>
-        <a href ="/memoproject/" style="margin-top:100px;">홈으로</a>
+        <button type="button" onclick="location.href='/memoproject'">홈으로</button>
     </section>
 </body>
 

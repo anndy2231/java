@@ -269,5 +269,24 @@ public class HomeController {
 		}
 		return "message";
 	}
+
+	@RequestMapping(value = "/searchUser", method = RequestMethod.GET)
+	public String searchMethod(Locale locale, Model model) {
+		return "searchUser";
+	}
+
+	@RequestMapping(value = "/searchUser_action", method = RequestMethod.POST)
+	public String searchAction(HttpServletRequest request, Locale locale, Model model) {
+		String name = request.getParameter("name");
+		if(name.isEmpty()) {
+			model.addAttribute("m1", "이름을 입력해주세요");
+			return "message";
+		} else {	
+			MemoDB db = new MemoDB();
+			String htmlString = db.searchUser(name);
+			model.addAttribute("listInTbody", htmlString);
+			return "userList";
+		}
+	}
 	
 }

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--     <link rel="stylesheet" href="/resources/main.css" media="screen" type="text/css"> -->
+    <link rel="stylesheet" href="/resources/main.css" media="screen" type="text/css">
     <title>Message</title>
 </head>
 
@@ -16,7 +16,7 @@
         <p style="padding: 20px; background: #eee; border-radius: 5px; text-align: center;">
             ${m1 }
         </p>
-        <a href ="/memoproject/login" style="margin-top:100px;">다시 로그인</a>
+        <button type="button" onclick="location.href='/memoproject/login'">다시 로그인</button>
     </section>
 </body>
 

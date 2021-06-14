@@ -36,7 +36,7 @@
 			<input type="button" value="입력 완료" id="submit_button" />
 		</form>
 	</section>
-		<a href ="/memoproject/" style="margin-top:100px;">홈으로</a>
+		<button type="button" onclick="location.href='/memoproject'">홈으로</button>
 </body>
 
 </html>

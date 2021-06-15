@@ -17,9 +17,7 @@
 		<form action="login2_action" method="post"> 
 			<label> 비밀번호 입력: <input type="password" name="pwd" placeholder="비밀번호" /></label>
 			<input type="submit" value="확인" id="" /><br>
-			<div>
 			<button type="button" onclick="location.href='/memoproject'">홈으로</button>
-			</div>
 		</form>
 	</section>
 </body>

@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import org.sqlite.SQLiteConfig;
 
-
 public class MemoDB {
 
 	public String sha256(String msg) {
@@ -119,7 +118,7 @@ public class MemoDB {
 		}
 		return resultData;
 	}
-	
+
 	public int detailsData2(String id, String pwd) {
 		int resultData = 0;
 		try {
@@ -128,9 +127,9 @@ public class MemoDB {
 			SQLiteConfig config = new SQLiteConfig();
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
 					config.toProperties());
-			
+
 			pwd = sha256(pwd);
-			
+
 			// use
 			String query = "SELECT idx FROM user WHERE id=? and pwd=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -148,7 +147,7 @@ public class MemoDB {
 		}
 		return resultData;
 	}
-	
+
 	public User detailsData3(int idx) {
 		User resultData = new User();
 		try {
@@ -179,35 +178,32 @@ public class MemoDB {
 		}
 		return resultData;
 	}
-	
+
 	public String selectMemo(int userIdx) {
 		String resultString = "";
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
 
 			// use
 			String query = "SELECT * from memo where userIdx = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userIdx);
 			ResultSet resultSet = preparedStatement.executeQuery(); // 커서가 가리키는 곳 가져오기 위함
-			
+
 			while (resultSet.next()) {
 				int idx = resultSet.getInt("idx");
 				String title = resultSet.getString("title");
 				String content = resultSet.getString("content");
 				String created = resultSet.getString("created");
 				String updated = resultSet.getString("updated");
-				resultString = resultString + "<tr>" 
-						+ "<td>" + idx + "</td>"
-						+ "<td>" + title + "</td>"
-						+ "<td>" + content + "</td>"
-						+ "<td>" + created	+ "</td>"
-						+ "<td>" + updated + "</td>"
-						+ "<td><a href = 'update?idx=" + idx + "'>수정</a></td>"
-						+ "<td><a href = 'delete?idx=" + idx + "'>삭제</a></td>";
+				resultString = resultString + "<tr>" + "<td>" + idx + "</td>" + "<td>" + title + "</td>" + "<td>"
+						+ content + "</td>" + "<td>" + created + "</td>" + "<td>" + updated + "</td>"
+						+ "<td><a href = 'update?idx=" + idx + "'>수정</a></td>" + "<td><a href = 'delete?idx=" + idx
+						+ "'>삭제</a></td>";
 				resultString = resultString + "</tr>";
 			}
 
@@ -218,13 +214,14 @@ public class MemoDB {
 		}
 		return resultString;
 	}
-	
+
 	public void deleteMemo(int idx) {
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
 
 			// use
 			String query = "DELETE FROM memo WHERE idx=?";
@@ -239,14 +236,15 @@ public class MemoDB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean updateMemo(Memo memo) {
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
-						
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
 			// use
 			String query = "UPDATE memo SET title=?, content=?, updated=? WHERE idx=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -255,7 +253,7 @@ public class MemoDB {
 			preparedStatement.setString(3, memo.updated);
 			preparedStatement.setInt(4, memo.idx);
 			int result = preparedStatement.executeUpdate();
-			
+
 			if (result < 1) {
 				return false;
 			}
@@ -269,17 +267,18 @@ public class MemoDB {
 		}
 		return true;
 	}
-	
+
 	public boolean updateUser(User user) {
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
-						
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
 			// password hash
 			user.pwd = sha256(user.pwd);
-			
+
 			// use
 			String query = "UPDATE user SET pwd=?, name=?, birthday=?, address=? WHERE idx=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -289,7 +288,7 @@ public class MemoDB {
 			preparedStatement.setString(4, user.address);
 			preparedStatement.setInt(5, user.idx);
 			int result = preparedStatement.executeUpdate();
-			
+
 			if (result < 1) {
 				return false;
 			}
@@ -303,14 +302,15 @@ public class MemoDB {
 		}
 		return true;
 	}
-	
+
 	public boolean updateUser2(User user) {
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
-						
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
 			// use
 			String query = "UPDATE user SET name=?, birthday=?, address=? WHERE idx=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -319,7 +319,7 @@ public class MemoDB {
 			preparedStatement.setString(3, user.address);
 			preparedStatement.setInt(4, user.idx);
 			int result = preparedStatement.executeUpdate();
-			
+
 			if (result < 1) {
 				return false;
 			}
@@ -333,7 +333,7 @@ public class MemoDB {
 		}
 		return true;
 	}
-	
+
 	public boolean signUp(User user) {
 		try {
 			// open
@@ -347,16 +347,16 @@ public class MemoDB {
 			PreparedStatement preparedStatement1 = connection.prepareStatement(query1);
 			preparedStatement1.setString(1, user.id);
 			ResultSet resultSet = preparedStatement1.executeQuery();
-			if(resultSet.next()) {
+			if (resultSet.next()) {
 				preparedStatement1.close();
 				connection.close();
 				return false;
 			}
 			preparedStatement1.close();
-			
+
 			// password hash
 			user.pwd = sha256(user.pwd);
-			
+
 			// use
 			String query2 = "INSERT INTO user (id, pwd, name, birthday, address, created) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(query2);
@@ -384,24 +384,25 @@ public class MemoDB {
 		}
 		return true;
 	}
-	
+
 	public Boolean logIn(String id, String pwd) {
 		try {
 			// open
 			Class.forName("org.sqlite.JDBC");
 			SQLiteConfig config = new SQLiteConfig();
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db", config.toProperties());
-			
+			Connection connection = DriverManager.getConnection("jdbc:sqlite:/" + "c:/tomcat/memoDB.db",
+					config.toProperties());
+
 			pwd = sha256(pwd);
-			
+
 			// use
 			String query = "SELECT id, pwd FROM user WHERE id = ? AND pwd = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, id);
-			preparedStatement.setString(2, pwd);			
+			preparedStatement.setString(2, pwd);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			if (resultSet.next()) { 
+
+			if (resultSet.next()) {
 				connection.close();
 				preparedStatement.close();
 				return true;
@@ -415,8 +416,7 @@ public class MemoDB {
 			return false;
 		}
 	}
-	
-	
+
 	public String searchUser(String searchName) {
 		String resultString = "";
 		try {
@@ -436,11 +436,8 @@ public class MemoDB {
 				String name = resultSet.getString("name");
 				String birthday = resultSet.getString("birthday");
 				String address = resultSet.getString("address");
-				resultString = resultString + "<tr>"
-							+ "<td>" + idx + "</td>"
-							+ "<td>" + name	+ "</td>"
-							+ "<td>" + birthday + "</td>"
-							+ "<td>" + address + "</td>";
+				resultString = resultString + "<tr>" + "<td>" + idx + "</td>" + "<td>" + name + "</td>" + "<td>"
+						+ birthday + "</td>" + "<td>" + address + "</td>";
 				resultString = resultString + "</tr>";
 			}
 
@@ -451,5 +448,5 @@ public class MemoDB {
 		}
 		return resultString;
 	}
-	
+
 }
